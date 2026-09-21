@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ToastProvider } from '@/shared/ui';
+import { Icon, ToastProvider } from '@/shared/ui';
 import { cn } from '@/shared/lib/cn';
 import { LeavePage } from '@/apps/hr/pages/LeavePage';
 import { LeaveAdminPage } from '@/apps/hr/pages/LeaveAdminPage';
@@ -17,8 +17,26 @@ const TABS: { key: TabKey; label: string }[] = [
     { key: 'leaveAdmin', label: '직원 연차 조회' },
 ];
 
+// 다크 모드 토글 — 원본 앱의 useThemeStore/ThemeToggle을 그대로 옮기는 대신,
+// 이 포트폴리오 껍데기에서만 쓸 최소 버전(localStorage 저장 + <html>.dark 토글)으로 구현.
+const useDarkMode = () => {
+    const [isDark, setIsDark] = useState(() => {
+        const stored = localStorage.getItem('theme');
+        if (stored) return stored === 'dark';
+        return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    });
+
+    useEffect(() => {
+        document.documentElement.classList.toggle('dark', isDark);
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }, [isDark]);
+
+    return [isDark, setIsDark] as const;
+};
+
 function App() {
     const [tab, setTab] = useState<TabKey>('leave');
+    const [isDark, setIsDark] = useDarkMode();
 
     return (
         <QueryClientProvider client={queryClient}>
@@ -45,6 +63,14 @@ function App() {
                                 </button>
                             ))}
                         </nav>
+                        <button
+                            type="button"
+                            aria-label={isDark ? '라이트 모드로 전환' : '다크 모드로 전환'}
+                            onClick={() => setIsDark((v) => !v)}
+                            className="ml-auto inline-flex h-8 w-8 items-center justify-center rounded-md text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-900"
+                        >
+                            <Icon name={isDark ? 'sun' : 'moon'} size={16} />
+                        </button>
                     </header>
                     <main className="min-h-0 flex-1">
                         {tab === 'leave' ? <LeavePage /> : <LeaveAdminPage />}

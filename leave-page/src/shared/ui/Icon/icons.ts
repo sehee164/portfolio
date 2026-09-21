@@ -11,9 +11,11 @@ import {
     Flag,
     Inbox,
     Loader,
+    Moon,
     Plus,
     RotateCcw,
     Search,
+    Sun,
     TriangleAlert,
     Info,
     X,
@@ -43,6 +45,8 @@ export const ICONS = {
     flag: Flag, // 깃발 — 다음 휴가
     warn: TriangleAlert, // 삼각형 안의 ! — 경고/위험
     info: Info, // 원 안의 i — 안내
+    sun: Sun, // 해 — 라이트 모드
+    moon: Moon, // 달 — 다크 모드
 } as const;
 
 export type IconName = keyof typeof ICONS;
