@@ -1,0 +1,237 @@
+/* =====================================================
+   Design Tokens (Light + Dark)
+   Bright Blue + Warm Coral + Cool Slate
+
+   - 라이트 값은 :root, 다크 값은 .dark 셀렉터.
+   - 색상은 모두 시맨틱(neutral/primary/coral/success/warning/danger/info)
+     스케일과 surface/text 별칭으로 구성.
+   - Tailwind v4 의 @theme inline 매핑(index.css)을 거쳐
+     bg-neutral-100, text-text-primary 같은 유틸이 .dark 토글에 자동 반응.
+
+   ⚠️  하드코딩된 색상(예: bg-white, text-black) 사용 금지.
+       표면은 bg-neutral-0 / bg-neutral-50 / bg-bg-elevated 를 사용.
+   ===================================================== */
+
+/* `:root` = 기본(라이트). `.light-surface` = 다크 모드 안에서도 라이트 토큰을 강제하는
+   "라이트 섬" — 결재 문서 종이처럼 항상 흰 종이로 보여야 하는 영역에 붙인다.
+   (.light-surface 요소가 토큰을 자기 자신에 재선언하므로, 상위 html.dark 보다 가까워
+    그 subtree 는 라이트로 풀린다. html 자체는 .dark 가 이겨 앱 전체 다크는 그대로 유지.) */
+:root,
+.light-surface {
+    /* ─── Primary — Bright Blue ─── */
+    --color-primary-50: #eff5ff;
+    --color-primary-100: #dbe8fe;
+    --color-primary-200: #bfd6fe;
+    --color-primary-300: #93bbfd;
+    --color-primary-400: #609afa;
+    --color-primary-500: #3b82f6;
+    --color-primary-600: #2570eb;
+    --color-primary-700: #1d5bd6;
+    --color-primary-800: #1e4bae;
+    --color-primary-900: #1e40af;
+
+    /* ─── Secondary — Warm Coral ─── */
+    --color-coral-50: #fff4ed;
+    --color-coral-100: #ffe5d4;
+    --color-coral-200: #ffc8a8;
+    --color-coral-300: #ffa371;
+    --color-coral-400: #ff7e47;
+    --color-coral-500: #f86224;
+    --color-coral-600: #e94b16;
+    --color-coral-700: #c13911;
+    --color-coral-800: #9a2f14;
+    --color-coral-900: #7c2913;
+
+    /* ─── Neutrals — Cool Slate ─── */
+    --color-neutral-0: #ffffff;
+    --color-neutral-25: #fbfcfd;
+    --color-neutral-50: #f6f8fa;
+    --color-neutral-100: #eef1f4;
+    --color-neutral-200: #e2e6ec;
+    --color-neutral-300: #cbd2db;
+    --color-neutral-400: #9aa3b2;
+    --color-neutral-500: #6b7585;
+    --color-neutral-600: #4b5462;
+    --color-neutral-700: #353c48;
+    --color-neutral-800: #232831;
+    --color-neutral-900: #14181f;
+
+    /* ─── Semantic — Success ─── */
+    --color-success-50: #ecfdf3;
+    --color-success-100: #d1fae5;
+    --color-success-500: #10b981;
+    --color-success-600: #059669;
+    --color-success-700: #047857;
+
+    /* ─── Semantic — Warning ─── */
+    --color-warning-50: #fffaeb;
+    --color-warning-100: #fef3c7;
+    --color-warning-500: #f59e0b;
+    --color-warning-600: #d97706;
+    --color-warning-700: #b45309;
+
+    /* ─── Semantic — Danger ─── */
+    --color-danger-50: #fef2f2;
+    --color-danger-100: #fee2e2;
+    --color-danger-500: #ef4444;
+    --color-danger-600: #dc2626;
+    --color-danger-700: #b91c1c;
+
+    /* ─── Semantic — Info ─── */
+    --color-info-50: #eff8ff;
+    --color-info-100: #e0f2fe;
+    --color-info-500: #0ea5e9;
+    --color-info-600: #0284c7;
+    --color-info-700: #0369a1;
+
+    /* ─── Accent — Violet (카테고리 8번째 대표색) ─── */
+    --color-violet-50: #f5f3ff;
+    --color-violet-100: #ede9fe;
+    --color-violet-500: #8b5cf6;
+    --color-violet-600: #7c3aed;
+    --color-violet-700: #6d28d9;
+
+    /* ─── Surface · Text semantic aliases ─── */
+    --color-bg: var(--color-neutral-50);
+    --color-bg-elevated: var(--color-neutral-0);
+    --color-bg-subtle: var(--color-neutral-100);
+    --color-border: var(--color-neutral-200);
+    --color-border-strong: var(--color-neutral-300);
+    --color-text-primary: var(--color-neutral-900);
+    --color-text-secondary: var(--color-neutral-600);
+    --color-text-tertiary: var(--color-neutral-500);
+    --color-text-disabled: var(--color-neutral-400);
+    --color-text-inverse: #ffffff;
+
+    /* ─── shadcn 스타일 raw alias ───
+       외부에서 그대로 이식한 컴포넌트(예: shared/ui/FileViewer/viewers)가
+       border-[var(--border)] / bg-muted / text-foreground 형태로 작성된 경우 대비.
+       시맨틱 토큰의 별칭일 뿐 — 신규 코드는 위의 --color-* 시스템을 직접 사용. */
+    --border: var(--color-border);
+    --muted: var(--color-neutral-100);
+    --muted-foreground: var(--color-text-tertiary);
+    --background: var(--color-bg-elevated);
+    --foreground: var(--color-text-primary);
+
+    /* ─── Shadows ─── */
+    --shadow-xs: 0 1px 2px rgba(20, 24, 31, 0.04);
+    --shadow-sm:
+        0 1px 3px rgba(20, 24, 31, 0.06), 0 1px 2px rgba(20, 24, 31, 0.04);
+    --shadow-md:
+        0 4px 8px -2px rgba(20, 24, 31, 0.06), 0 2px 4px -2px rgba(20, 24, 31, 0.04);
+    --shadow-lg:
+        0 12px 24px -6px rgba(20, 24, 31, 0.08), 0 4px 8px -2px rgba(20, 24, 31, 0.04);
+    --shadow-overlay: 0 24px 48px -12px rgba(20, 24, 31, 0.18);
+    --shadow-focus: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+/* 라이트 섬은 네이티브 컨트롤/스크롤바도 라이트로 — 토큰 재선언과 함께 적용. */
+.light-surface {
+    color-scheme: light;
+    /* baseline text color — body 가 다크모드에서 이미 밝은색으로 '계산'한 color 를
+       그대로 상속하면(예: 색상 클래스 없는 <input> 입력 텍스트) 흰 종이 위에서 안 보인다.
+       light-surface 안에서 라이트값으로 풀리는 text-primary 토큰으로 color 를 재설정해
+       하위가 어두운 텍스트색을 상속하도록 한다. */
+    color: var(--color-text-primary);
+}
+
+/* =====================================================
+   Dark mode — `.dark` 클래스 토글
+   useThemeSync 훅이 <html> 요소에 .dark 클래스를 붙임.
+
+   전략: 뉴트럴 스케일을 "반전(invert)" — neutral-50 은 다크에선 페이지 배경,
+   neutral-900 은 본문 텍스트 색이 된다. 이렇게 하면 기존 컴포넌트의
+   bg-neutral-100/text-neutral-900 같은 유틸이 자동으로 다크에 적응한다.
+   ===================================================== */
+
+.dark {
+    /* ─── Neutrals — Inverted Cool Slate ─── */
+    --color-neutral-0: #0e1116;
+    --color-neutral-25: #11151b;
+    --color-neutral-50: #151a22;
+    --color-neutral-100: #1b2129;
+    --color-neutral-200: #232a35;
+    --color-neutral-300: #2e3744;
+    --color-neutral-400: #4a5566;
+    --color-neutral-500: #76808f;
+    --color-neutral-600: #9aa3b2;
+    --color-neutral-700: #bdc4cd;
+    --color-neutral-800: #dde2e8;
+    --color-neutral-900: #f2f4f7;
+
+    /* ─── Primary — Bright Blue (다크에서 살짝 더 밝게) ─── */
+    --color-primary-50: #0f1e36;
+    --color-primary-100: #122847;
+    --color-primary-200: #163363;
+    --color-primary-300: #1e4da0;
+    --color-primary-400: #2c6cd9;
+    --color-primary-500: #4a90f7;
+    --color-primary-600: #6ba5fa;
+    --color-primary-700: #93bbfd;
+    --color-primary-800: #bfd6fe;
+    --color-primary-900: #dbe8fe;
+
+    /* ─── Coral ─── */
+    --color-coral-50: #2b1408;
+    --color-coral-100: #3d1b0c;
+    --color-coral-500: #ff8a52;
+    --color-coral-600: #ffa371;
+    --color-coral-700: #ffc8a8;
+
+    /* ─── Success ─── */
+    --color-success-50: #0e2a1e;
+    --color-success-100: #103527;
+    --color-success-500: #34d399;
+    --color-success-600: #6ee7b7;
+    --color-success-700: #a7f3d0;
+
+    /* ─── Warning ─── */
+    --color-warning-50: #2b1f08;
+    --color-warning-100: #3a2a0e;
+    --color-warning-500: #fbbf24;
+    --color-warning-600: #fcd34d;
+    --color-warning-700: #fde68a;
+
+    /* ─── Danger ─── */
+    --color-danger-50: #2b1010;
+    --color-danger-100: #3a1515;
+    --color-danger-500: #f87171;
+    --color-danger-600: #fca5a5;
+    --color-danger-700: #fecaca;
+
+    /* ─── Info ─── */
+    --color-info-50: #0a2030;
+    --color-info-100: #0e2a3f;
+    --color-info-500: #38bdf8;
+    --color-info-600: #7dd3fc;
+    --color-info-700: #bae6fd;
+
+    /* ─── Violet (다크 — 더 밝게) ─── */
+    --color-violet-50: #1e1838;
+    --color-violet-100: #271f4d;
+    --color-violet-500: #a78bfa;
+    --color-violet-600: #c4b5fd;
+    --color-violet-700: #ddd6fe;
+
+    /* ─── Surface · Text semantic aliases (다크) ─── */
+    --color-bg: #0b0e12;
+    --color-bg-elevated: #151a22;
+    --color-bg-subtle: #1b2129;
+    --color-border: #232a35;
+    --color-border-strong: #2e3744;
+    --color-text-primary: #f2f4f7;
+    --color-text-secondary: #bdc4cd;
+    --color-text-tertiary: #9aa3b2;
+    --color-text-disabled: #4a5566;
+    --color-text-inverse: #0b0e12;
+
+    /* ─── Shadows (다크 — 더 강한 alpha) ─── */
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.25);
+    --shadow-md:
+        0 4px 8px -2px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.25);
+    --shadow-lg:
+        0 12px 24px -6px rgba(0, 0, 0, 0.5), 0 4px 8px -2px rgba(0, 0, 0, 0.3);
+    --shadow-overlay: 0 24px 48px -12px rgba(0, 0, 0, 0.6);
+    --shadow-focus: 0 0 0 3px rgba(74, 144, 247, 0.35);
+}
